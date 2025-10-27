@@ -1,27 +1,58 @@
-# Docker volumes
+# -------------------------------
+# Docker volumes (könyvtárak fennmaradnak, fájlok nem)
+# -------------------------------
+
+# GitLab
 gitlab/config/*
 gitlab/data/*
 gitlab/logs/*
+# Hagyj .gitkeep fájlokat a könyvtárakban, ha üresen is kell legyenek
+# pl.: gitlab/config/.gitkeep
+
+# GitLab Runner
 runner/config/*
+
+# Grafana
 grafana_data/*
+
+# Netdata
 netdata/netdata_cache/*
 netdata/netdata_config/*
 netdata/netdata_lib/*
-nginx/certs/
-backup/
-monitoring/netdata/
+
+# Nginx SSL certs
+nginx/certs/*
+
+# Backup
+backup/*
+
+# Monitoring
+monitoring/netdata/*
+
+# -------------------------------
+# Python cache
+# -------------------------------
 */__pycache__/
+
+# -------------------------------
+# Archive files
+# -------------------------------
 *.tar
 
+# -------------------------------
 # Editor / IDE
+# -------------------------------
 .vscode/
 .idea/
 *.swp
 
-# System
+# -------------------------------
+# System files
+# -------------------------------
 .DS_Store
 Thumbs.db
 
+# -------------------------------
 # Optional log files
+# -------------------------------
 *.log
-
