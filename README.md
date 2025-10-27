@@ -19,58 +19,57 @@ Egy nyílt forrású **homelab DevOps projekt**, amely bemutatja, hogyan lehet
 | 💾 Backup rendszer | Napi rsync alapú mentés |
 | 📊 Monitoring | Netdata dashboard (CPU, RAM, Disk, Network) |
 
----
-#Haszonos tudni:
+---<br>
+#Haszonos tudni:<br>
+<br>
+#lehet látni mi hova van ki irányítva - portok és konténerket is<br>
+docker ps<br>
+<br>
+#bad gateway lehet attól hogy a gitlab sokáig inicializál itt tudom követni:<br>
+docker logs -f gitlab<br>
+<br>
+#gitlab újra konfigolás<br>
+docker compose down<br>
+docker compose up -d<br>
+docker exec -it gitlab gitlab-ctl reconfigure<br>
+<br>
+#nginx restart<br>
+docker compose up -d nginx<br>
+docker compose restart nginx<br>
+docker restart nginx-proxy<br>
+docker ps | grep nginx<br>
+<br>
+#teszt<br>
+curl -vk https://gitlab.local<br>
+<br>
+#kellenek ezek a hálózatok<br>
+docker network create gitlab-net<br>
+docker network connect gitlab-net gitlab<br>
+<br>
+#bemegyünk a proxy-ba ha kell<br>
+docker exec -it nginx-proxy sh<br>
+<br>
+#bad gateway esetében érdmes megnézni a logokat<br>
+docker exec -it gitlab gitlab-ctl tail -f<br>
+#vagy csak a Puma és Workhorse logokat:<br>
+docker exec -it gitlab gitlab-ctl tail -f puma<br>
+docker exec -it gitlab gitlab-ctl tail -f gitlab-workhorse<br>
+<br>
+#gitlab működik-e a gitlab.local<br>
+docker exec -it gitlab bash<br>
+cat /etc/hosts<br>
+ping -c1 gitlab.local<br>
+<br>
+root@gitlab:/# ping -c1 gitlab.local<br>
+PING gitlab.local (172.18.0.3): 56 data bytes<br>
+64 bytes from 172.18.0.3: seq=0 ttl=64 time=0.087 ms<br>
 
-#lehet látni mi hova van ki irányítva - portok és konténerket is
-docker ps
-
-#bad gateway lehet attól hogy a gitlab sokáig inicializál itt tudom követni:
-docker logs -f gitlab
-
-#gitlab újra konfigolás
-docker compose down
-docker compose up -d
-docker exec -it gitlab gitlab-ctl reconfigure
-
-#nginx restart
-docker compose up -d nginx
-docker compose restart nginx
-docker restart nginx-proxy
-docker ps | grep nginx
-
-#teszt
-curl -vk https://gitlab.local
-
-#kellenek ezek a hálózatok
-docker network create gitlab-net
-docker network connect gitlab-net gitlab
-
-#bemegyünk a proxy-ba ha kell
-docker exec -it nginx-proxy sh
-
-#bad gateway esetében érdmes megnézni a logokat
-docker exec -it gitlab gitlab-ctl tail -f
-#vagy csak a Puma és Workhorse logokat:
-docker exec -it gitlab gitlab-ctl tail -f puma
-docker exec -it gitlab gitlab-ctl tail -f gitlab-workhorse
-
-
-#gitlab működik-e a gitlab.local
-docker exec -it gitlab bash
-cat /etc/hosts
-ping -c1 gitlab.local
-
-root@gitlab:/# ping -c1 gitlab.local
-PING gitlab.local (172.18.0.3): 56 data bytes
-64 bytes from 172.18.0.3: seq=0 ttl=64 time=0.087 ms
-
---- gitlab.local ping statistics ---
-1 packets transmitted, 1 packets received, 0% packet loss
-round-trip min/avg/max = 0.087/0.087/0.087 ms
-
-#nginx proxy eléri-e a gitlab konténert - a konténer neve kell NEM a gitlab.local vigyázz
-docker exec -it nginx-proxy sh
-ping gitlab
+--- gitlab.local ping statistics ---<br>
+1 packets transmitted, 1 packets received, 0% packet loss<br>
+round-trip min/avg/max = 0.087/0.087/0.087 ms<br>
+<br>
+#nginx proxy eléri-e a gitlab konténert - a konténer neve kell NEM a gitlab.local vigyázz<br>
+docker exec -it nginx-proxy sh<br>
+ping gitlab<br>
 apk add curl   # ha nincs curl
 curl -v http://gitlab:80
