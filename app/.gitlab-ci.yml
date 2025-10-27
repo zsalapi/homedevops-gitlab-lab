@@ -1,0 +1,43 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: sample-app
+
+# --- Build stage ---
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Building Docker image..."
+    - docker build -t $IMAGE_NAME .
+    - docker images
+
+# --- Test stage ---
+test:
+  stage: test
+  image: alpine:latest
+  script:
+    - echo "Running simple test on index.html..."
+    - grep "Hello" index.html
+
+# --- Deploy stage ---
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Deploying app to Nginx container..."
+    # Ellenőrizzük, hogy fut-e az nginx konténer
+    - if [ "$(docker ps -q -f name=nginx-proxy)" = "" ]; then echo "Nginx container not running!"; exit 1; fi
+    # Átmásoljuk az új HTML fájlt az Nginx konténerbe
+    - docker cp index.html nginx-proxy:/usr/share/nginx/html/index.html
+    - echo "Deployment complete!"
+

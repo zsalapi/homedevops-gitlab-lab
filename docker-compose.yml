@@ -1,0 +1,126 @@
+version: '3.9'
+
+services:
+  # --- GitLab CE (belső HTTP, SSL az Nginx-ben)
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.local
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.local'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+        gitlab_workhorse['trusted_proxies'] = ['nginx-proxy']
+        nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+        }
+    ports:
+      - "2222:22"     # SSH
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/logs:/var/log/gitlab
+      - ./gitlab/data:/var/opt/gitlab
+    networks:
+      - web
+      - monitoring
+
+  # --- GitLab Runner
+  runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - ./runner/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
+      - monitoring
+
+  # --- Nginx Reverse Proxy (HTTPS termination)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    restart: always
+    depends_on:
+      - gitlab
+    ports:
+      - "80:80"      # HTTP → HTTPS redirect
+      - "443:443"    # HTTPS
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - web
+
+  # --- Monitoring stack (Prometheus, Grafana, Node/Netdata Exporters)
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+    restart: always
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: always
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - monitoring
+
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: homedevops
+    restart: always
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    environment:
+      DO_NOT_TRACK: "1"
+    volumes:
+      - ./netdata/netdata_config:/etc/netdata
+      - ./netdata/netdata_lib:/var/lib/netdata
+      - ./netdata/netdata_cache:/var/cache/netdata
+    networks:
+      - monitoring
+
+volumes:
+  grafana_data:
+  netdata_config:
+  netdata_lib:
+  netdata_cache:
+
+networks:
+  web:
+  monitoring:
+

@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Node CPU Usage",
+      "targets": [
+        {
+          "expr": "rate(node_cpu_seconds_total[1m])",
+          "legendFormat": "{{mode}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Node Memory Usage",
+      "targets": [
+        {
+          "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100",
+          "legendFormat": "available memory %"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Disk Usage",
+      "targets": [
+        {
+          "expr": "node_filesystem_avail_bytes / node_filesystem_size_bytes * 100",
+          "legendFormat": "{{mountpoint}}"
+        }
+      ]
+    }
+  ],
+  "title": "Node Exporter Overview",
+  "schemaVersion": 27,
+  "version": 1
+}

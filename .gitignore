@@ -1,0 +1,27 @@
+# Docker volumes
+gitlab/config/*
+gitlab/data/*
+gitlab/logs/*
+runner/config/*
+grafana_data/*
+netdata/netdata_cache/*
+netdata/netdata_config/*
+netdata/netdata_lib/*
+nginx/certs/
+backup/
+monitoring/netdata/
+*/__pycache__/
+*.tar
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# System
+.DS_Store
+Thumbs.db
+
+# Optional log files
+*.log
+

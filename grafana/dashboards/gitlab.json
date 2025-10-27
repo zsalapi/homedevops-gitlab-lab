@@ -1,0 +1,54 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "graph",
+      "title": "GitLab CPU Usage",
+      "targets": [
+        {
+          "expr": "rate(container_cpu_usage_seconds_total{name=\"gitlab\"}[1m])",
+          "legendFormat": "{{container_label_com_docker_swarm_service_name}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Memory Usage",
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{name=\"gitlab\"}",
+          "legendFormat": "{{container_label_com_docker_swarm_service_name}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Running Jobs",
+      "targets": [
+        {
+          "expr": "gitlab_ci_running_jobs_total",
+          "legendFormat": "running jobs"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Pipeline Status",
+      "targets": [
+        {
+          "expr": "gitlab_ci_pipelines_total{status='success'}",
+          "legendFormat": "success"
+        },
+        {
+          "expr": "gitlab_ci_pipelines_total{status='failed'}",
+          "legendFormat": "failed"
+        }
+      ]
+    }
+  ],
+  "title": "GitLab Overview",
+  "schemaVersion": 27,
+  "version": 1
+}

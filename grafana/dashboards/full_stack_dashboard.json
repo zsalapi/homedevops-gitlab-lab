@@ -1,0 +1,153 @@
+{
+  "id": null,
+  "title": "Full Stack Status Dashboard",
+  "tags": ["gitlab", "nginx", "prometheus", "netdata", "node_exporter", "status"],
+  "timezone": "browser",
+  "schemaVersion": 37,
+  "version": 1,
+  "refresh": "15s",
+  "panels": [
+    {
+      "type": "row",
+      "title": "GitLab",
+      "gridPos": {"x":0,"y":0,"w":24,"h":1}
+    },
+    {
+      "type": "stat",
+      "title": "GitLab Sidekiq Jobs",
+      "targets":[
+        {"expr":"gitlab_sidekiq_queue_size","legendFormat":"Jobs"}
+      ],
+      "gridPos":{"x":0,"y":1,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "graphMode":"none",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":50},{"color":"red","value":100}]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "GitLab HTTP Requests/sec",
+      "targets":[
+        {"expr":"rate(gitlab_http_requests_total[1m])","legendFormat":"Requests/sec"}
+      ],
+      "gridPos":{"x":6,"y":1,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "graphMode":"none",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":200},{"color":"red","value":500}]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Nginx",
+      "gridPos": {"x":0,"y":5,"w":24,"h":1}
+    },
+    {
+      "type": "stat",
+      "title": "Nginx Active Connections",
+      "targets":[
+        {"expr":"nginx_connections_active","legendFormat":"Active"}
+      ],
+      "gridPos":{"x":0,"y":6,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":50},{"color":"red","value":100}]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Nginx Requests/sec",
+      "targets":[
+        {"expr":"rate(nginx_http_requests_total[1m])","legendFormat":"Requests/sec"}
+      ],
+      "gridPos":{"x":6,"y":6,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":200},{"color":"red","value":500}]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Node Exporter",
+      "gridPos": {"x":0,"y":10,"w":24,"h":1}
+    },
+    {
+      "type": "stat",
+      "title": "CPU Usage %",
+      "targets":[
+        {"expr":"100 - (avg by (instance) (irate(node_cpu_seconds_total{mode='idle'}[1m])) * 100)","legendFormat":"CPU %"}
+      ],
+      "gridPos":{"x":0,"y":11,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":70},{"color":"red","value":90}]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Memory Usage %",
+      "targets":[
+        {"expr":"(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100","legendFormat":"Used %"}
+      ],
+      "gridPos":{"x":6,"y":11,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":70},{"color":"red","value":90}]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Netdata",
+      "gridPos": {"x":0,"y":15,"w":24,"h":1}
+    },
+    {
+      "type": "stat",
+      "title": "Netdata CPU Usage %",
+      "targets":[
+        {"expr":"rate(netdata_cpu_busy[1m])*100","legendFormat":"CPU %"}
+      ],
+      "gridPos":{"x":0,"y":16,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":70},{"color":"red","value":90}]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Netdata Memory Usage %",
+      "targets":[
+        {"expr":"netdata_memory_used_bytes / netdata_memory_total_bytes * 100","legendFormat":"Used %"}
+      ],
+      "gridPos":{"x":6,"y":16,"w":6,"h":4},
+      "options":{
+        "colorMode":"value",
+        "thresholds":{
+          "mode":"absolute",
+          "steps":[{"color":"green","value":0},{"color":"yellow","value":70},{"color":"red","value":90}]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "type": "row",
+      "title": "GitLab",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }
+    },
+    {
+      "type": "graph",
+      "title": "GitLab CPU Usage",
+      "targets": [
+        { "expr": "rate(container_cpu_usage_seconds_total{name=\"gitlab\"}[1m])", "legendFormat": "CPU" }
+      ],
+      "gridPos": { "x": 0, "y": 1, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "green"
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Memory Usage",
+      "targets": [
+        { "expr": "container_memory_usage_bytes{name=\"gitlab\"}", "legendFormat": "Memory" }
+      ],
+      "gridPos": { "x": 12, "y": 1, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "blue"
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Running Jobs",
+      "targets": [
+        { "expr": "gitlab_ci_running_jobs_total", "legendFormat": "Running Jobs" }
+      ],
+      "gridPos": { "x": 0, "y": 7, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "orange"
+    },
+    {
+      "type": "graph",
+      "title": "GitLab Pipeline Status",
+      "targets": [
+        { "expr": "gitlab_ci_pipelines_total{status='success'}", "legendFormat": "Success" },
+        { "expr": "gitlab_ci_pipelines_total{status='failed'}", "legendFormat": "Failed" }
+      ],
+      "gridPos": { "x": 12, "y": 7, "w": 12, "h": 6 },
+      "colorBackground": true
+    },
+    {
+      "type": "row",
+      "title": "Nginx",
+      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 1 }
+    },
+    {
+      "type": "graph",
+      "title": "Nginx Requests per Second",
+      "targets": [
+        { "expr": "rate(nginx_http_requests_total[1m])", "legendFormat": "Requests/sec" }
+      ],
+      "gridPos": { "x": 0, "y": 14, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "green"
+    },
+    {
+      "type": "graph",
+      "title": "Nginx 4xx/5xx Responses",
+      "targets": [
+        { "expr": "rate(nginx_http_requests_total{status=~'4..'}[1m])", "legendFormat": "4xx" },
+        { "expr": "rate(nginx_http_requests_total{status=~'5..'}[1m])", "legendFormat": "5xx" }
+      ],
+      "gridPos": { "x": 12, "y": 14, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "red"
+    },
+    {
+      "type": "row",
+      "title": "Node Exporter",
+      "gridPos": { "x": 0, "y": 20, "w": 24, "h": 1 }
+    },
+    {
+      "type": "graph",
+      "title": "Node CPU Usage",
+      "targets": [
+        { "expr": "rate(node_cpu_seconds_total[1m])", "legendFormat": "{{mode}}" }
+      ],
+      "gridPos": { "x": 0, "y": 21, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "purple"
+    },
+    {
+      "type": "graph",
+      "title": "Node Memory Usage",
+      "targets": [
+        { "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100", "legendFormat": "Available %" }
+      ],
+      "gridPos": { "x": 12, "y": 21, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "blue"
+    },
+    {
+      "type": "graph",
+      "title": "Node Disk Usage",
+      "targets": [
+        { "expr": "node_filesystem_avail_bytes / node_filesystem_size_bytes * 100", "legendFormat": "{{mountpoint}}" }
+      ],
+      "gridPos": { "x": 0, "y": 27, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "orange"
+    },
+    {
+      "type": "graph",
+      "title": "Node Network Traffic",
+      "targets": [
+        { "expr": "rate(node_network_receive_bytes_total[1m])", "legendFormat": "RX" },
+        { "expr": "rate(node_network_transmit_bytes_total[1m])", "legendFormat": "TX" }
+      ],
+      "gridPos": { "x": 12, "y": 27, "w": 12, "h": 6 },
+      "colorBackground": true,
+      "colorValue": "green"
+    }
+  ],
+  "title": "Full Stack Monitoring - Color",
+  "schemaVersion": 27,
+  "version": 1
+}
