@@ -1,6 +1,6 @@
 # 🧠 HomeDevOps GitLab Lab
 
-Egy nyílt forrású **homelab DevOps projekt**, amely bemutatja, hogyan lehet
+Egy Szabad szoftveres **homelab DevOps projekt**, amely bemutatja, hogyan lehet
 **GitLab CE**, **GitLab Runner**, **Nginx reverse proxy**, **CI/CD pipeline**, **backup**
 és **monitoring** rendszert építeni **Docker Compose** segítségével.
 
@@ -19,6 +19,9 @@ Egy nyílt forrású **homelab DevOps projekt**, amely bemutatja, hogyan lehet
 | 💾 Backup rendszer | Napi rsync alapú mentés |
 | 📊 Monitoring | Netdata dashboard (CPU, RAM, Disk, Network) |
 
+#/etc/hosts fájlba vedd fel a gépeden:<br>
+127.0.0.1       gitlab.local<br>
+<br>
 ---<br>
 #Haszonos tudni:<br>
 <br>

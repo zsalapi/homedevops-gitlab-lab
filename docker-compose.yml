@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   # --- GitLab CE (belső HTTP, SSL az Nginx-ben)
   gitlab:
