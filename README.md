@@ -19,14 +19,14 @@ and **monitoring** system using **Docker Compose**.
 | 💾 Backup system       | Daily rsync-based backup                    |
 | 📊 Monitoring          | Netdata dashboard (CPU, RAM, Disk, Network) |
 
----
+---<br>
 #/etc/hosts must contains:<br>
 127.0.0.1       gitlab.local<br>
 <br>
-#You can install and run it:
-./install.sh
-docker-compose up -d
-
+#You can install and run it:<br>
+./install.sh<br>
+docker-compose up -d<br>
+<br>
 ---<br>
 #Good to know:<br>
 <br>
