@@ -17,4 +17,3 @@ check_interval = 0
     disable_cache = false
     volumes = ["/cache"]
   listen_address = ":9252"
-
