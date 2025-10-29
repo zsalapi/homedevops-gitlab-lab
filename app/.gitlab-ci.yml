@@ -35,9 +35,9 @@ deploy:
     - docker:dind
   script:
     - echo "Deploying app to Nginx container..."
-    # Ellenőrizzük, hogy fut-e az nginx konténer
+    # Check if the nginx container is running
     - if [ "$(docker ps -q -f name=nginx-proxy)" = "" ]; then echo "Nginx container not running!"; exit 1; fi
-    # Átmásoljuk az új HTML fájlt az Nginx konténerbe
+    # Copy the new HTML file to the Nginx container
     - docker cp index.html nginx-proxy:/usr/share/nginx/html/index.html
     - echo "Deployment complete!"
 

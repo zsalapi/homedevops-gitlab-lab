@@ -1,13 +1,12 @@
 # 📸 Screenshots – HomeDevOps GitLab Lab
 
-Ez a mappa tartalmazza a projekt képernyőképeit és azok leírását.
+This folder contains the project screenshots and their descriptions.
 
-| Fájlnév | Leírás |
-|----------|---------|
-| `gitlab_dashboard.png` | GitLab CE főoldal, saját homelab telepítés |
-| `pipeline_running.png` | GitLab CI/CD pipeline build–test–deploy fázisokkal |
-| `netdata_dashboard.png` | Netdata monitoring, rendszerterhelés megjelenítése |
+| Filename                | Description                                                  |
+| ----------------------- | ------------------------------------------------------------ |
+| `gitlab_dashboard.png`  | GitLab CE homepage from the self-hosted homelab installation |
+| `pipeline_running.png`  | GitLab CI/CD pipeline with build–test–deploy stages          |
+| `netdata_dashboard.png` | Netdata monitoring showing system load                       |
 
-Minden kép a valósan futó rendszert dokumentálja.
-A helyőrző fájlokat valódi képekre lehet cserélni.
-
+All images document the actual running system.
+Placeholder files can be replaced with real screenshots.

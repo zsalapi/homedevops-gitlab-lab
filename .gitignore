@@ -1,13 +1,13 @@
 # -------------------------------
-# Docker volumes (könyvtárak fennmaradnak, fájlok nem)
+# Docker volumes (directories remain, files do not)
 # -------------------------------
 
 # GitLab
 gitlab/config/*
 gitlab/data/*
 gitlab/logs/*
-# Hagyj .gitkeep fájlokat a könyvtárakban, ha üresen is kell legyenek
-# pl.: gitlab/config/.gitkeep
+# Leave .gitkeep files in the directories if they need to exist even when empty
+# e.g.: gitlab/config/.gitkeep
 
 # GitLab Runner
 runner/config/*

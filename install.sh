@@ -10,4 +10,5 @@ mkdir -p ./backup
 mkdir -p ./grafana_data
 mkdir -p ./runner/config
 cp ./config.toml ./runner/config/
-echo "Most már futtathatod: docker-compose up -d"
+echo "Installation complete!"
+echo "Now you can run with: docker-compose up -d"

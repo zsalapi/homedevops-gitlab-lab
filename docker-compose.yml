@@ -1,5 +1,5 @@
 services:
-  # --- GitLab CE (belső HTTP, SSL az Nginx-ben)
+  # --- GitLab CE (internal HTTP, and SSL in Nginx)
   gitlab:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab
