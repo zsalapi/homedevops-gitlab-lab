@@ -80,5 +80,5 @@ round-trip min/avg/max = 0.087/0.087/0.087 ms<br>
 #nginx proxy reaches the gitlab container - the container name must NOT be gitlab.local, be careful<br>
 docker exec -it nginx-proxy sh<br>
 ping gitlab<br>
-apk add curl   # if curl is not available
-curl -v http://gitlab:80
+apk add curl   # if curl is not available<br>
+curl -v http://gitlab:80<br>
