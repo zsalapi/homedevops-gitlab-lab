@@ -1,4 +1,5 @@
 #!/bin/bash
+#You can backup Gitlab data with this script
 DATE=$(date +%Y-%m-%d)
 DEST="/backup/$DATE"
 mkdir -p "$DEST"
